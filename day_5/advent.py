@@ -4,7 +4,7 @@ with open('input.txt', 'r') as f:
     vents = f.read().split('\n')
 
 
-def draw_vents(vents):
+def count_intersections(vents):
     points = []
     for vent in vents:
         start, end = [[int(p) for p in x.strip().split(',')] for x in vent.split('->')]
@@ -17,5 +17,5 @@ def draw_vents(vents):
     return len([x for x in Counter(points).values() if x > 1])
 
 
-answer1 = draw_vents(vents)
+answer1 = count_intersections(vents)
 print(answer1)
