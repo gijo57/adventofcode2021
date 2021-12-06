@@ -2,8 +2,7 @@ with open('input.txt', 'r') as f:
     parts = f.read().split('\n\n')
     numbers = [int(n) for n in parts[0].split(',')]
 
-    tables = parts[1:]
-    tables = [[[int(x) for x in row.split()] for row in t.split('\n')] for t in tables]
+    tables = [[[int(x) for x in row.split()] for row in t.split('\n')] for t in parts[1:]]
 
 
 def get_score(numbers, table):
