@@ -39,6 +39,7 @@ def handle_flashes(coords, flashed):
     else:
         for x, y in flashed_octopi:
             lines[x][y] = 0
+        print(np.matrix(lines))
         return len(flashed_octopi)
 
 
@@ -49,18 +50,28 @@ def run_step():
             coords.append((x, y))
             lines[x][y] += 1
     new_flashes = handle_flashes(coords, [])
+    print(new_flashes)
     return new_flashes
 
 
 def simulate_steps(steps):
-    synchronized_step = 0
     flashes = 0
     for i in range(steps):
-        new_flashes = run_step()
-        print(new_flashes)
-        flashes += new_flashes
+        flashes += run_step()
     return flashes
 
 
+def simulate_until_sync_flash():
+    sync_step = 0
+    while True:
+        sync_step += 1
+        flashes = run_step()
+
+        if (flashes == total_octopi):
+            break
+    return sync_step + 100
+
+
 answer1 = simulate_steps(100)
-print(answer1)
+answer2 = simulate_until_sync_flash()
+print(answer1, answer2)
