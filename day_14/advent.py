@@ -3,10 +3,7 @@ from collections import Counter
 with open('input.txt', 'r') as f:
     parts = f.read().split('\n\n')
     template = parts[0]
-    rule_list = [x.split('->') for x in parts[1].split('\n')]
-    rules = {}
-    for r in rule_list:
-        rules[r[0].strip()] = r[1].strip()
+    rules = dict([x.split(' -> ') for x in parts[1].split('\n')])
 
 
 def run_step(polymer):
