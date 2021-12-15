@@ -1,6 +1,5 @@
 with open('input.txt', 'r') as f:
     fish = [int(x) for x in f.read().split(',')]
-    days = 80
 
 
 def run_timer(fish, days):
@@ -18,5 +17,20 @@ def run_timer(fish, days):
     return len(fish_timers)
 
 
-answer1 = run_timer(fish, days)
-print(answer1)
+def run_timer_optimized(fish, days):
+    fish_dict = {x: 0 for x in range(9)}
+    for f in fish:
+        fish_dict[f] += 1
+    for d in range(days):
+        zero_energy = fish_dict[0]
+        for k, v in fish_dict.items():
+            if (k > 0):
+                fish_dict[k-1] = v
+        fish_dict[6] += zero_energy
+        fish_dict[8] = zero_energy
+    return sum(fish_dict.values())
+
+
+answer1 = run_timer_optimized(fish, 18)
+answer2 = run_timer_optimized(fish, 256)
+print(answer1, answer2)
