@@ -31,16 +31,14 @@ def launch(init_velocity):
 
 def find_init_velocity():
     highest_y = 0
-    for i in range(200):
-        for j in range(200):
+    for i in range(0, 300):
+        for j in range(0, 300):
             y = launch((i, j))
-            print(y)
             if (y):
                 if (y > highest_y):
                     highest_y = y
-                elif (y < highest_y):
-                    break
     return highest_y
 
 
-print(find_init_velocity())
+answer1 = find_init_velocity()
+print(answer1)
