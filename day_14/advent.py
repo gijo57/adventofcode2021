@@ -29,6 +29,11 @@ def run_steps(steps):
     return polymer
 
 
+def solve2(polymer):
+    
+
+
+
 final_polymer = run_steps(10)
 most_common = Counter(final_polymer).most_common(1)[0][1]
 least_common = min(Counter(final_polymer).values())
