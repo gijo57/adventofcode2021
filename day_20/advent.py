@@ -29,13 +29,3 @@ def get_img_binary(pixels):
 def get_output_pixel(binary):
     decimal = int(binary, 2)
     return algo[decimal]
-
-
-def count_lit():
-    for i in range(rows):
-        for j in range(cols):
-            px = get_output_pixel(get_img_binary(find_neighbors(i, j)))
-            print(px)
-
-
-print(count_lit())
