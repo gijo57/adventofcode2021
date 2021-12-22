@@ -1,8 +1,11 @@
+import numpy as np
+
 with open('input.txt', 'r') as f:
     algo, image = f.read().split('\n\n')
     image = [list(x) for x in image.split('\n')]
     rows = len(image)
     cols = len(image[0])
+    output = np.pad(image, pad_width=1, mode='constant', constant_values='.')
 
 
 def find_neighbors(x, y):
@@ -29,3 +32,12 @@ def get_img_binary(pixels):
 def get_output_pixel(binary):
     decimal = int(binary, 2)
     return algo[decimal]
+
+
+def get_output():
+    for i in range(rows):
+        for j in range(cols):
+            print(get_output_pixel(get_img_binary(find_neighbors(i, j))))
+
+
+print(get_output())
