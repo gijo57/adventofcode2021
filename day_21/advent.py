@@ -40,5 +40,9 @@ def simulate_game(point_limit):
     return min(player1[1], player2[1]) * die_cast
 
 
+def simulate_universes():
+    
+
+
 answer1 = simulate_game(1000)
 print(answer1)
