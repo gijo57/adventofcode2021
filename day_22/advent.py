@@ -24,6 +24,5 @@ for limit in limits:
                 if (i >= limit[1][0] and i <= limit[1][1] and j >= limit[2][0] and j <= limit[2][1] and k >= limit[3][0] and k <= limit[3][1]):
                     reactor_state[i][j][k] = cube_value
 
-unique, counts = np.unique(reactor_state, return_counts=True)
-answer1 = dict(zip(unique, counts))[1.0]
+answer1 = np.sum(reactor_state)
 print(answer1)
