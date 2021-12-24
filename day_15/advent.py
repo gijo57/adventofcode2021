@@ -78,7 +78,7 @@ def dijkstra(nodes, risks, rows, cols):
         visited[current] = current_risk
         del unvisited[current]
 
-        if not unvisited or goal in visited.keys():
+        if not unvisited:
             break
 
         candidates = [node for node in unvisited.items() if node[1]]
@@ -90,12 +90,12 @@ def dijkstra(nodes, risks, rows, cols):
 nodes1 = create_nodes(rows1, cols1)
 risks1 = define_risks(rows1, cols1, lines)
 
-map2 = create_larger_map()
-rows2 = len(map2)
-cols2 = len(map2[0])
-nodes2 = create_nodes(rows2, cols2)
-risks2 = define_risks(rows2, cols2, map2)
+# map2 = create_larger_map()
+# rows2 = len(map2)
+# cols2 = len(map2[0])
+# nodes2 = create_nodes(rows2, cols2)
+# risks2 = define_risks(rows2, cols2, map2)
 
 answer1 = dijkstra(nodes1, risks1, rows1, cols1)
-answer2 = dijkstra(nodes2, risks2, rows2, cols2)
-print(answer1, answer2)
+# answer2 = dijkstra(nodes2, risks2, rows2, cols2)
+print(answer1)
