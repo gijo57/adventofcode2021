@@ -22,7 +22,8 @@ conversion_chart = {
 
 
 def convert_to_binary(chart, hex_data):
-    return ''.join([chart[x] for x in hex_data])
+    return ''.join([bin(int(x, 16)) for x in hex_data])
 
 
 binary_data = convert_to_binary(conversion_chart, hex_data)
+print(binary_data)
