@@ -67,6 +67,6 @@ def find_basin(x, y, input):
 low_points = [x[1] for x in find_low_points()]
 basins = [find_basin(x, y, heights) for [x, y] in low_points]
 answer1 = get_risk_level([x[0] for x in low_points])
-answer2 = reduce(lambda x, y: x *y, [x for x in sorted(basins)][-3:])
+answer2 = reduce(lambda x, y: x * y, sorted(basins)[-3:])
 
 print(answer1, answer2)
