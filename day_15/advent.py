@@ -68,7 +68,6 @@ def dijkstra(nodes, risks, rows, cols):
 
     while True:
         for neighbor, risk in risks[current].items():
-            print(neighbor, risk)
             if neighbor not in unvisited:
                 continue
             new_risk = current_risk + risk
