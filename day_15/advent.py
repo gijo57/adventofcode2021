@@ -48,24 +48,24 @@ def create_larger_map():
 
 
 def dijkstra(graph, starting_vertex, goal):
-    distances = {vertex: inf for vertex in graph}
-    distances[starting_vertex] = 0
+    risks = {vertex: inf for vertex in graph}
+    risks[starting_vertex] = 0
 
     queue = [(0, starting_vertex)]
     while len(queue) > 0:
-        current_distance, current_vertex = heapq.heappop(queue)
+        current_risk, current_vertex = heapq.heappop(queue)
 
-        if current_distance > distances[current_vertex]:
+        if current_risk > risks[current_vertex]:
             continue
 
-        for neighbor, weight in graph[current_vertex].items():
-            distance = current_distance + weight
+        for neighbor, risk in graph[current_vertex].items():
+            new_risk = current_risk + risk
 
-            if distance < distances[neighbor]:
-                distances[neighbor] = distance
-                heapq.heappush(queue, (distance, neighbor))
+            if new_risk < risks[neighbor]:
+                risks[neighbor] = new_risk
+                heapq.heappush(queue, (new_risk, neighbor))
 
-    return distances[goal]
+    return risks[goal]
 
 
 rows1 = len(lines)
