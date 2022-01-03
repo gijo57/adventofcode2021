@@ -50,8 +50,8 @@ def create_larger_map():
 def dijkstra(graph, starting_vertex, goal):
     risks = {vertex: inf for vertex in graph}
     risks[starting_vertex] = 0
-
     queue = [(0, starting_vertex)]
+
     while len(queue) > 0:
         current_risk, current_vertex = heapq.heappop(queue)
 
