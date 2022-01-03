@@ -1,40 +1,29 @@
 from collections import defaultdict
 from copy import deepcopy
 import numpy as np
+from math import inf
+import heapq
 
 with open('input.txt', 'r') as f:
     lines = [[int(y) for y in x.strip()] for x in f.readlines()]
-    rows1 = len(lines)
-    cols1 = len(lines[0])
 
 
-def find_neighbors(x, y, rows, cols, lines):
-    neighbors = defaultdict()
+def create_graph(rows, cols, data):
+    graph = defaultdict()
     x_vals = [-1, 0, +1]
     y_vals = [-1, 0, +1]
-    for x2 in x_vals:
-        for y2 in y_vals:
-            if (y + y2 >= 0 and x + x2 >= 0 and y + y2 < cols and x + x2 < rows):
-                if (x, y) != (x + x2, y + y2):
-                    if (x2 == 0 or y2 == 0):
-                        neighbors[(x + x2, y + y2)] = lines[x + x2][y + y2]
-    return neighbors
 
-
-def define_risks(rows, cols, lines):
-    risks = defaultdict()
     for x in range(rows):
         for y in range(cols):
-            risks[(x, y)] = find_neighbors(x, y, rows, cols, lines)
-    return risks
-
-
-def create_nodes(rows, cols):
-    nodes = []
-    for x in range(rows):
-        for y in range(cols):
-            nodes.append((x, y))
-    return nodes
+            vertex = defaultdict()
+            for x2 in x_vals:
+                for y2 in y_vals:
+                    if (y + y2 >= 0 and x + x2 >= 0 and y + y2 < cols and x + x2 < rows):
+                        if (x, y) != (x + x2, y + y2):
+                            if (x2 == 0 or y2 == 0):
+                                vertex[(x + x2, y + y2)] = (data[x + x2][y + y2])
+            graph[(x, y)] = vertex
+    return graph
 
 
 def create_larger_map():
@@ -58,44 +47,36 @@ def create_larger_map():
     return map
 
 
-def dijkstra(nodes, risks, rows, cols):
-    unvisited = {node: None for node in nodes}
-    visited = {}
-    current = (0, 0)
-    goal = (rows-1, cols-1)
-    current_risk = 0
-    unvisited[current] = current_risk
+def dijkstra(graph, starting_vertex, goal):
+    distances = {vertex: inf for vertex in graph}
+    distances[starting_vertex] = 0
 
-    while True:
-        for neighbor, risk in risks[current].items():
-            if neighbor not in unvisited:
-                continue
-            new_risk = current_risk + risk
+    queue = [(0, starting_vertex)]
+    while len(queue) > 0:
+        current_distance, current_vertex = heapq.heappop(queue)
 
-            if unvisited[neighbor] is None or unvisited[neighbor] > new_risk:
-                unvisited[neighbor] = new_risk
+        if current_distance > distances[current_vertex]:
+            continue
 
-        visited[current] = current_risk
-        del unvisited[current]
+        for neighbor, weight in graph[current_vertex].items():
+            distance = current_distance + weight
 
-        if not unvisited:
-            break
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(queue, (distance, neighbor))
 
-        candidates = [node for node in unvisited.items() if node[1]]
-        current, current_risk = sorted(candidates, key=lambda x: x[1])[0]
-
-    return visited[goal]
+    return distances[goal]
 
 
-nodes1 = create_nodes(rows1, cols1)
-risks1 = define_risks(rows1, cols1, lines)
+rows1 = len(lines)
+cols1 = len(lines[0])
+graph = create_graph(rows1, cols1, lines)
 
-# map2 = create_larger_map()
-# rows2 = len(map2)
-# cols2 = len(map2[0])
-# nodes2 = create_nodes(rows2, cols2)
-# risks2 = define_risks(rows2, cols2, map2)
+lines2 = create_larger_map()
+rows2 = len(lines2)
+cols2 = len(lines2[0])
+graph2 = create_graph(rows2, cols2, lines2)
 
-answer1 = dijkstra(nodes1, risks1, rows1, cols1)
-# answer2 = dijkstra(nodes2, risks2, rows2, cols2)
-print(answer1)
+answer1 = dijkstra(graph, (0, 0), (rows1-1, cols1-1))
+answer2 = dijkstra(graph2, (0, 0), (rows2-1, cols2-1))
+print(answer1, answer2)
