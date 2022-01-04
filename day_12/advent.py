@@ -34,4 +34,5 @@ def search_paths():
     return len(paths)
 
 
-print(search_paths())
+answer1 = search_paths()
+print(answer1)
